@@ -1,14 +1,18 @@
 import { Provider } from 'react-redux';
-import './App.css';
+import './App.sass';
 import Constructor from './components/constructor/Constructor';
+import DragArea from './components/dragarea/DragArea';
 import store from './core/store/store';
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Constructor />
-      </div>
+        <div className="container">
+          <Constructor />
+          <DragArea />
+        </div>
+        </div>
     </Provider>
   );
 }

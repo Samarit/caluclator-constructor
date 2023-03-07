@@ -1,5 +1,9 @@
+import Item from "../item/Item";
+
 export default function Equal() {
   return(
-    <div className="equal">=</div>
+    <Item>
+      <div className="equal">=</div>
+    </Item>
   )
 }

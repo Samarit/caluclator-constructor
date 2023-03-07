@@ -30,6 +30,11 @@ const initialState: IInitState = {
         {id: 3, name: 'numbers'},
         {id: 4, name: 'equal'}
       ]
+    },
+    {
+      id: 2,
+      title: 'droparea',
+      items: []
     }
   ],
   currenyItemId: 0,
