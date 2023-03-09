@@ -1,12 +1,13 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import sort from '../reducers/sortConstructor'
+import constructor from '../reducers/constructorSlice'
 
 const rootReducer = combineReducers({
-    reducer: sort
+    reducer: constructor
 })
 
 const store = configureStore({
   reducer: rootReducer
 })
 
+export type RootState = ReturnType<typeof store.getState>
 export default store
