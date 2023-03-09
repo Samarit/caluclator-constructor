@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 // Draggable item
 type Item = {
@@ -16,9 +16,9 @@ interface IAreas extends Array<IArea>{}
 
 interface IInitState {
   areas: IAreas,
-  currentItem: Item | {},
+  currentItem: Item | null,
   currentItemOrder: number,
-  currentItemZone: string
+  currentItemArea: string
 }
 
 const initialState: IInitState = {
@@ -39,14 +39,14 @@ const initialState: IInitState = {
       items: []
     }
   ],
-  currentItem: {},
+  currentItem: null,
   currentItemOrder: 0,
-  currentItemZone: ''
+  currentItemArea: ''
 }
 
 
 const constructorSlice = createSlice({
-  name: 'constructor',
+  name: 'sort',
   initialState,
   reducers: {
     setCurrentItem: (state, action) => {
@@ -57,11 +57,20 @@ const constructorSlice = createSlice({
       if (action.payload.name === 'result') {
         state.areas[1].items.unshift(action.payload)
       } else state.areas[1].items.push(action.payload)
+    },
+    deleteItem: (state, action) => {
+      const items = current(state.areas[1].items)
+
+      const newItems = [...items].filter((item) => {
+        if (item.id !== action.payload.id) return item
+      })
+      
+      state.areas[1].items = newItems
     }
   }
 })
 
-export const {reducer, actions} = constructorSlice
-export const {setCurrentItem, pushDroppedItem} = actions
+const {reducer, actions} = constructorSlice
+export const {setCurrentItem, pushDroppedItem, deleteItem} = actions
 
 export default reducer

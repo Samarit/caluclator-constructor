@@ -1,7 +1,8 @@
 import { Provider } from 'react-redux';
 import './App.sass';
 import Constructor from './components/constructor/Constructor';
-import DragArea from './components/dragarea/DragArea';
+import DropArea from './components/droparea/DropArea';
+import SwitchMode from './components/SwitchMode/SwitchMode';
 import store from './core/store/store';
 
 function App() {
@@ -9,8 +10,9 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <div className="container">
+          <SwitchMode />
           <Constructor />
-          <DragArea />
+          <DropArea />
         </div>
         </div>
     </Provider>

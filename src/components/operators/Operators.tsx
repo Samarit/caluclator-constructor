@@ -1,9 +1,15 @@
-import Item from "../item/Item";
+import Button from "../Button/Button"
+
+type Operator = string
+
+const operators = [
+  '/', 'x', '+', '-'
+]
 
 export default function Operators() {
   return(
       <div className="operators">
-        / x - +
+        {operators.map((operator) => <Button operator={operator} key={operator} />)}
       </div>
   )
 }
