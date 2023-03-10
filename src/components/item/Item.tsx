@@ -1,4 +1,3 @@
-import { log } from "console";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteItem, setCurrentItem } from "../../core/reducers/constructorSlice";
 import { RootState } from "../../core/store/store";
@@ -6,6 +5,7 @@ import Equal from "../equal/Equal";
 import Numbers from "../numbers/Numbers";
 import Operators from "../operators/Operators";
 import Result from "../result/Result";
+import './item.sass'
 
 
 interface IItemProps {
@@ -20,6 +20,7 @@ export default function Item({id, name, area}: IItemProps) {
 
   const droparea = useSelector((state: RootState) => state.sort.areas[1])
   const currentItem = useSelector((state: RootState) => state.sort.currentItem)
+  const calcMode = useSelector((state: RootState) => state.mode.mode)
 
   const isInDropArea = () => {
     for (let i = 0; i < droparea.items.length; i++) {
@@ -30,11 +31,11 @@ export default function Item({id, name, area}: IItemProps) {
     return false
   }
 
-  const isDraggable = () => (area === 'constructor' && !isInDropArea()) || area ==='droparea'
+  // Checks if item can be interacted
+  const isActive = () => (area === 'constructor' && !isInDropArea()) || area ==='droparea'
 
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
     dispatch(setCurrentItem({id, name}))
-    console.log(isDraggable())
   }
 
   const dragEndHandler = (e: React.DragEvent<HTMLDivElement>) => {
@@ -43,7 +44,9 @@ export default function Item({id, name, area}: IItemProps) {
   const clickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     dispatch(setCurrentItem({id, name}))
     // Delete on dbclick
-    if (e.detail === 2) dispatch(deleteItem(currentItem))
+    if (e.detail === 2 && calcMode === 'constructor' && isActive()) {
+      dispatch(deleteItem(currentItem))
+    }
   }
 
   const setContent = (name: string) => {
@@ -64,10 +67,10 @@ export default function Item({id, name, area}: IItemProps) {
   return(
     <div className="item-wrapper" 
       style={{
-        opacity: isDraggable() ? '100%' : '50%'
+        opacity: isActive() ? '100%' : '50%'
       }}
       onClick={clickHandler}
-      draggable={isDraggable()}
+      draggable={isActive()}
       onDragStart={dragStartHandler}
       onDragEnd={dragEndHandler}>
         {setContent(name)}

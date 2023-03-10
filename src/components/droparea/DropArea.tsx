@@ -7,8 +7,6 @@ import Item from '../item/Item'
 export default function DropArea() {
 
   const dispatch = useDispatch()
-  
-
   const currentItem = useSelector((state: RootState) => state.sort.currentItem)
   
   const dropArea = useSelector((state: RootState) => state.sort.areas[1])

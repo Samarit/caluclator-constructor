@@ -66,11 +66,14 @@ const constructorSlice = createSlice({
       })
       
       state.areas[1].items = newItems
+    },
+    clearDropArea: (state, action) => {
+      state.areas[1].items = []
     }
   }
 })
 
 const {reducer, actions} = constructorSlice
-export const {setCurrentItem, pushDroppedItem, deleteItem} = actions
+export const {setCurrentItem, pushDroppedItem, deleteItem, clearDropArea} = actions
 
 export default reducer

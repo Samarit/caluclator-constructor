@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import sort from '../reducers/constructorSlice'
+import runtime from '../reducers/runtimeSlice'
 import mode from '../reducers/switchSlice'
 
-const rootReducer = combineReducers({sort, mode})
+const rootReducer = combineReducers({sort, runtime, mode})
 
 const store = configureStore({
   reducer: rootReducer
