@@ -10,11 +10,13 @@ export default function Constructor() {
   
 
   return(
-    <div className="constructor">
-      {mode === 'constructor' &&
-        constructorArea.items.map((item) => {
-        return <Item id={item.id} name={item.name} area='constructor' key={item.id}/>
-      })}
+    <div className="area">
+      <div className="constructor">
+        {mode === 'constructor' &&
+          constructorArea.items.map((item) => {
+          return <Item id={item.id} name={item.name} area='constructor' key={item.id}/>
+        })}
+      </div>
     </div>
   )
 }

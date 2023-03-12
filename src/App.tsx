@@ -1,19 +1,13 @@
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import './App.sass';
-import Constructor from './components/constructor/Constructor';
-import DropArea from './components/droparea/DropArea';
-import SwitchMode from './components/SwitchMode/SwitchMode';
-import store from './core/store/store';
+import Calculator from './components/Calculator';
+import store, { RootState } from './core/store/store';
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <div className="container">
-          <SwitchMode />
-          <Constructor />
-          <DropArea />
-        </div>
+          <Calculator />
         </div>
     </Provider>
   );

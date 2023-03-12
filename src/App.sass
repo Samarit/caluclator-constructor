@@ -1,13 +1,46 @@
+@import "./_reset.sass"
+
+@font-face
+  font-family: Helvetica Neue
+  src: url('./assets/fonts/HelveticaNeueMedium.woff')
+
 .App
   display: flex
   justify-content: center
   align-items: center
+  font-family: Helvetica Neue
 
   .container
-    display: flex
-    justify-content: center
-    align-content: stretch
-    border: 1px solid black
+    display: grid
+    grid-template-columns: 243px 243px
+    grid-template-rows: 38px 448px
+    column-gap: 56px
+    row-gap: 30px
 
-.active
-  border: 1px solid green
+    .switch-wrapper
+      grid-column: 1 / -1
+      margin-left: auto
+
+.area, .switch
+  width: 243px
+
+.area .constructor, .area .droparea
+  display: flex
+  flex-direction: column
+  gap: 20px
+  height: 448px
+
+button
+  height: 48px
+  text-align: center
+  width: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  background-color: white
+  border: 1px solid #E2E3E5
+  border-radius: 6px
+  &:active
+    border: 2px solid #5D5FEF
+    background-color: #5D5FEF
+    color: white

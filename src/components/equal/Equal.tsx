@@ -1,27 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentResult, setDisplayValue, setMode } from "../../core/reducers/runtimeSlice";
+import { setCurrentResult, setDisplayValue, setIsCurrentResultFixed, setMode } from "../../core/reducers/runtimeSlice";
 import { RootState } from "../../core/store/store";
 import count from "../../core/utils/count";
+import "./equal.sass"
 
 export default function Equal() {
 
   const dispatch = useDispatch()
-  const {displayValue ,currentResult, currentNumber, currentOperation} = useSelector((state: RootState) => state.runtime)
-  const calcMode = useSelector((state: RootState) => state.mode.mode)
+  const {currentResult, currentNumber, currentOperation} = useSelector((state: RootState) => state.runtime)
 
   const clickHandler = (e: React.MouseEvent) => {
     e.preventDefault()
-
-    if (calcMode === 'constructor') return false
-
-    dispatch(setCurrentResult(count(currentResult, currentNumber, currentOperation)))
-    console.log('currentResult', currentResult);
+    // Count total result and display it 
+    const result = count(currentResult, currentNumber, currentOperation)
     
-    console.log("in equal",displayValue ,currentResult, currentNumber, currentOperation);
-
-    dispatch(setDisplayValue(count(currentResult, currentNumber, currentOperation)))
+    dispatch(setCurrentResult(result))
+    dispatch(setDisplayValue(result))
+    dispatch(setIsCurrentResultFixed(false)) // Unfixing left value
     dispatch(setMode('total'))
-    
   }
 
   return(

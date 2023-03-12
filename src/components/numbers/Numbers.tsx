@@ -13,48 +13,93 @@ const numbers = [
 export default function Numbers() {
 
   const dispatch = useDispatch()
-  const {currentResult, currentNumber, currentOperation, mode} = useSelector((state: RootState) => state.runtime)
-  const calcMode = useSelector((state: RootState) => state.mode.mode)
+  const {currentResult, currentNumber, isCurrentResultFixed, mode} = useSelector((state: RootState) => state.runtime)
 
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const target = e.target as HTMLButtonElement
     let value = target.value
 
-    if (calcMode === 'constructor') return false
+    // Pressed button is ','
+    if (value === ',') {
+      if (mode !== 'value') return false
+      if (currentNumber % 1 !== 0) return false
 
-    if (mode === 'value') {
-      if (value === ',') {
+      if (isCurrentResultFixed) {
         dispatch(setCurrentNumber(currentNumber + '.'))
-       } else if (currentResult === 0) {
-          dispatch(setCurrentResult(Number(value)))
-          dispatch(setDisplayValue(Number(value)))
-          dispatch(setCurrentNumber(Number(value)))
+        dispatch(setDisplayValue(currentNumber + '.'))
+      } else {
+        dispatch(setCurrentResult(currentResult + '.'))
+        dispatch(setDisplayValue(currentResult + '.'))
+      }
+      dispatch(setMode('point'))
+      return false
+    }
+
+    // If prev button click was ','
+    if (mode === 'point') {
+      if (isCurrentResultFixed) {
+        dispatch(setCurrentNumber(currentNumber + value))
+        dispatch(setDisplayValue(currentNumber + value))
+      } else {
+        dispatch(setCurrentResult(currentResult + value))
+        dispatch(setDisplayValue(currentResult + value))
+      }
+      dispatch(setMode('value'))
+    }
+
+    // In value mode 
+    if (mode === 'value') {
+      if (isCurrentResultFixed) {
+        // Set right value
+        if (currentNumber === 0) {
+          dispatch(setCurrentNumber(value))
+          dispatch(setDisplayValue(value))
         } else {
           dispatch(setCurrentNumber(currentNumber + value))
           dispatch(setDisplayValue(currentNumber + value))
         }
+        // Set left value
+      } else if (currentResult === 0) {
+        dispatch(setCurrentResult(value))
+        dispatch(setDisplayValue(value))
+      } else {
+        dispatch(setCurrentResult(currentResult + value))
+        dispatch(setDisplayValue(currentResult + value))
+      }
     }
     
+    // If result counted and displayed
     if (mode === 'total') {
+      if (isCurrentResultFixed) {
+        // Set right value
+        dispatch(setCurrentNumber(value))
+      } else {
+        // Set left value
+        dispatch(setCurrentResult(value))
+      }
+      dispatch(setDisplayValue(value))
       dispatch(setMode('value'))
-      dispatch(setCurrentNumber(Number(value)))
-      dispatch(setDisplayValue(Number(value)))
     }
 
+    // If operator clicked -> set right value
     if (mode === 'count') {
-      dispatch(setMode('value'))
-      dispatch(setCurrentNumber(Number(value)))
-      dispatch(setCurrentResult(currentNumber))
+      dispatch(setCurrentNumber(value))
       dispatch(setDisplayValue(value))
+      dispatch(setMode('value'))
     }
-    
   }
 
   return(
       <div className="numbers">
         {numbers.map((number, id) => {
-          return <button key={id} onClick={clickHandler} value={number}>{number}</button>
+          return <button 
+                    className={`number ${number === 0 ? 'zero' : ''}`}
+                    key={id} 
+                    onClick={clickHandler}
+                    value={number}>
+                      {number}
+                  </button>
         })}
       </div>
   )
