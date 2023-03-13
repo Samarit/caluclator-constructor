@@ -39,6 +39,12 @@ export default function Item({id, name, area}: IItemProps) {
     }
   }
 
+  const isDraggable = () => {
+    if (name === 'display' && isInDropArea() ) return false
+    if ( !isActive() ) return false
+    return true
+  }
+
   // DragEvents below
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
     dispatch(setCurrentItem({id, name}))
@@ -92,7 +98,7 @@ export default function Item({id, name, area}: IItemProps) {
         opacity: isActive() ? '100%' : '50%'
       }}
       onClick={clickHandler}
-      draggable={isActive() && calcMode === 'constructor'}
+      draggable={ isDraggable() }
       onDragStart={dragStartHandler}
       onDragEnter={dragEnterHandler}
       onDragLeave={dragLeaveHandler}
