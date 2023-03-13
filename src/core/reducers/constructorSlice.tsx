@@ -60,15 +60,21 @@ const constructorSlice = createSlice({
       // Push item to droparea, 'display' item push to start
       if (action.payload.currentItem.name === 'display') {
         state.areas[1].items.unshift(action.payload.currentItem)
-      } 
+      } // If dragged item dropped over droparea container -> just push to end
         else if (state.currentItemPosition === 0) {
           state.areas[1].items.push(action.payload.currentItem)
         } 
+          // If dragged item dropped over display item in dropare -> insert after
           else if (state.currentItemPosition === 1) {
-         // Insert item in specific position
-          state.areas[1].items.splice(action.payload.currentItemPosition, 0, action.payload.currentItem)
-       } 
-        else state.areas[1].items.splice(action.payload.currentItemPosition - 1, 0, action.payload.currentItem)
+          state.areas[1].items.splice(
+            action.payload.currentItemPosition, 
+            0, 
+            action.payload.currentItem)
+       } // If dragged item dropped over rest items -> insert before item
+        else state.areas[1].items.splice(
+          action.payload.currentItemPosition - 1, 
+          0, 
+          action.payload.currentItem)
     },
 
     sortItems: (state, action) => {
