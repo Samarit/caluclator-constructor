@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setCurrentNumber, setCurrentOperation, setCurrentResult, setDisplayValue, setIsCurrentResultFixed, setMode } from "../../core/reducers/runtimeSlice"
+import { setCurrentNumber, setCurrentOperation, setCurrentResult, setDisplayValue, setIsCurrentResultFixed, setIsFractionAdd, setMode } from "../../core/reducers/runtimeSlice"
 import { RootState } from "../../core/store/store"
 import './operators.sass'
 
@@ -42,6 +42,7 @@ export default function Operators() {
       dispatch(setCurrentNumber(0))
       dispatch(setDisplayValue(currentResult))
     }
+    dispatch(setIsFractionAdd(false))
     dispatch(setMode('count'))
     dispatch(setIsCurrentResultFixed(true))
     dispatch(setCurrentOperation(operation))

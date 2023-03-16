@@ -40,6 +40,7 @@ export default function Item({id, name, area}: IItemProps) {
   }
 
   const isDraggable = () => {
+    if ( calcMode === 'runtime') return false
     if (name === 'display' && isInDropArea() ) return false
     if ( !isActive() ) return false
     return true

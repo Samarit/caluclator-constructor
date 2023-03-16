@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentNumber, setCurrentResult, setDisplayValue, setMode } from '../../core/reducers/runtimeSlice'
+import { setCurrentNumber, setCurrentResult, setDisplayValue, setIsFractionAdd, setMode } from '../../core/reducers/runtimeSlice'
 import { RootState } from '../../core/store/store'
 import './numbers.sass'
 
@@ -13,7 +13,7 @@ const numbers = [
 export default function Numbers() {
 
   const dispatch = useDispatch()
-  const {currentResult, currentNumber, isCurrentResultFixed, mode} = useSelector((state: RootState) => state.runtime)
+  const {currentResult, currentNumber, isCurrentResultFixed, isFractionAdd, mode} = useSelector((state: RootState) => state.runtime)
 
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -23,7 +23,7 @@ export default function Numbers() {
     // Pressed button is ','
     if (value === ',') {
       if (mode !== 'value') return false
-      if (currentNumber % 1 !== 0) return false
+      if (isFractionAdd) return false
 
       if (isCurrentResultFixed) {
         dispatch(setCurrentNumber(currentNumber + '.'))
@@ -32,6 +32,7 @@ export default function Numbers() {
         dispatch(setCurrentResult(currentResult + '.'))
         dispatch(setDisplayValue(currentResult + '.'))
       }
+      dispatch(setIsFractionAdd(true)) // switch to adding fraction part mode
       dispatch(setMode('point'))
       return false
     }

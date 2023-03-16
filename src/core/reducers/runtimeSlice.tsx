@@ -6,6 +6,7 @@ interface IInitialState {
   currentNumber: number, // Right value
   currentOperation: string | null,
   isCurrentResultFixed: boolean, // For checking what value we set
+  isFractionAdd: boolean, // Checks if we adding a fraction part of number
   mode: string // For checking previous actions
 }
 
@@ -15,6 +16,7 @@ const initialState: IInitialState = {
   currentNumber: 0, 
   currentOperation: null,
   isCurrentResultFixed: false, 
+  isFractionAdd: false,
   mode: 'value'
 }
 
@@ -39,6 +41,9 @@ const runtimeSlice = createSlice({
     setIsCurrentResultFixed: (state, action) => {
       state.isCurrentResultFixed = action.payload
     },
+    setIsFractionAdd: (state, action) => {
+      state.isFractionAdd = action.payload
+    },
     setMode: (state, action) => {
       state.mode = action.payload
     },
@@ -48,5 +53,5 @@ const runtimeSlice = createSlice({
 
 const {reducer, actions} = runtimeSlice
 
-export const {setCurrentResult, setCurrentNumber, setCurrentOperation, setDisplayValue, setIsCurrentResultFixed, setMode, resetRuntimeState} = actions
+export const {setCurrentResult, setCurrentNumber, setCurrentOperation, setDisplayValue, setIsCurrentResultFixed, setIsFractionAdd, setMode, resetRuntimeState} = actions
 export default reducer
